@@ -1,0 +1,6 @@
+#!/usr/bin/expect
+        spawn scp -r -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q /home/circleci/project/build/libs/wibe_backend-0.1.0-SNAPSHOT.jar wibedevel@52.23.186.189:/home/wibedevel
+        set pass "abc123"
+        expect {
+        	password: {send "$pass\r"; exp_continue}
+        }

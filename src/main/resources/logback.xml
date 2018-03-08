@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>/var/log/clip/backend.log</file>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %p %c:%L - %msg%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>/var/log/clip/backend-%d{yyyy-MM-dd}.log</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <appender name="REQ_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>/var/log/clip/request.log</file>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %p %c:%L - %msg%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>/var/log/clip/request-%d{yyyy-MM-dd}.log</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <appender name="ERROR_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="ERROR_FILE" />
+    <includeCallerData>true</includeCallerData>
+  </appender>
+  <appender name="REQ_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="REQ_FILE" />
+    <includeCallerData>true</includeCallerData>
+  </appender>
+  <root level="ERROR">
+    <appender-ref ref="ERROR_ASYNC" />
+  </root>
+  <logger name="com.wibe.backend.security.RequestInterceptor" level="INFO">
+  	<appender-ref ref="REQ_ASYNC" />
+  </logger>
+</configuration>
